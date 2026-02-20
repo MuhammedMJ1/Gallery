@@ -40,7 +40,10 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error("Login error:", err);
     const msg = err instanceof Error ? err.message : "Login failed";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json({
+      error: msg,
+      hint: "Check Netlify Environment Variables are set (ADMIN_PASSWORD) and redeploy"
+    }, { status: 500 });
   }
 }
 
