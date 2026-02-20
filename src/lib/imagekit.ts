@@ -3,22 +3,21 @@ import ImageKit from "@imagekit/nodejs";
 /**
  * ImageKit server-side client for uploads and URL generation.
  * Use only in server code (API routes, Server Actions).
+ *
+ * The new @imagekit/nodejs SDK only accepts `privateKey` in its constructor.
+ * It reads the base URL from process.env['IMAGE_KIT_BASE_URL'] automatically.
  */
 export function getImageKitClient() {
   const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
-  const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
-  const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
 
-  if (!privateKey || !publicKey || !urlEndpoint) {
+  if (!privateKey) {
     throw new Error(
-      "Missing ImageKit env vars: IMAGEKIT_PRIVATE_KEY, IMAGEKIT_PUBLIC_KEY, NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT"
+      "Missing ImageKit env var: IMAGEKIT_PRIVATE_KEY"
     );
   }
 
   return new ImageKit({
     privateKey,
-    publicKey,
-    urlEndpoint,
   });
 }
 
